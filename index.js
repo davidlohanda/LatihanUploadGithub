@@ -77,6 +77,8 @@ let angka = [1,2,3,4,1,2,5,6];
 console.log(angka);
 let nomor = new Set(angka);
 console.log(nomor);
-console.log(...angka)
+
+console.log(nomor)
+
 
 
