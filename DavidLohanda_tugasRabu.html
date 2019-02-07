@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        table , th , td {
+            border-collapse: collapse;
+            border: 1px solid black;
+            padding: 10px;
+            margin: 50px;
+            
+        }
+    
+    </style>
+</head>
+<body>
+    <center>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Usia</th>
+                    <th>Pekerjaan</th>
+                    <th>Picture</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="isiTable">
+                
+
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><input type="text" placeholder="Masukan Nama"></td>
+                    <td><input type="text" placeholder="Masukan Usia"></td>
+                    <td><input type="text" placeholder="Masukan Pekerjaan"></td>
+                    <td><input type="text" placeholder="Link Picture"></td>
+                    <td><input type="button" onclick="tambahData()" value="Add"></td>
+                </tr>
+            </tfoot>
+        </table>
+        <table>
+            <tr>
+                <td><input type='text' placeholder='filter by name' style="padding :5px" ></td>
+                <td><input type='text' placeholder='filter by usia' style="padding :5px" ></td>
+                <td><input type='text' placeholder='filter by pekerjaan' style="padding :5px" ></td>
+                <td><input type='button' value='filter' onclick=filter(data)></td>
+            </tr>
+
+
+        </table>
+        <h1></h1>
+    </center>
+</body>
+</html>
+
+<!--JAVASCRIPT-->
+<script>
+    var data = []
+    class Orang{
+        constructor(nama,usia,pekerjaan,picture){
+            this.nama = nama
+            this.usia = usia
+            this.pekerjaan = pekerjaan
+            this.picture = picture
+        }
+    }
+
+    const tampil = (arr) => {
+                var tampil = ''
+                for(let i = 0 ; i < arr.length ; i++){
+                    tampil += `<tr>
+                                    <td>${arr[i].nama}</td>
+                                    <td>${arr[i].usia}</td>
+                                    <td>${arr[i].pekerjaan}</td>
+                                    <td><img src =${arr[i].picture} width="100px" /></td>
+                                    <td><button>Edit</button) </td>
+                                </tr>`
+                }
+                document.getElementById('isiTable').innerHTML= tampil
+            }
+        
+        const tambahData = () => {
+            var selektor = document.getElementsByTagName("input")
+            var nama = selektor[0].value
+            var usia = selektor[1].value
+            var pekerjaan = selektor[2].value
+            var link = selektor[3].value
+    
+            if(nama == '' || usia == '' || pekerjaan == '' || link == ''){
+                document.getElementsByTagName("h1")[0].innerHTML = "Harus diisi Semua"
+            } else{
+                document.getElementsByTagName("h1")[0].innerHTML = ''
+                var newMan =  new Orang(nama,usia,pekerjaan,link)
+                data.push(newMan)
+                tampil(data)
+                for(let i = 0 ; i < 4 ; i++){
+                    selektor[i].value = ''
+                }
+            }
+
+        }    
+
+       
+
+        const filter = (data , inputUserNama = '' , inputUserUsia = '' , inputUserPekerjaan= '') => {
+            var newData = []
+            var filterBy = document.getElementsByTagName('input')
+            var inputUserNama = filterBy[5].value
+            var inputUserUsia = filterBy[6].value
+            var inputUserPekerjaan = filterBy[7].value
+            
+            for(let i = 0 ; i < data.length ; i++){
+                if(data[i].nama.startsWith(inputUserNama) && data[i].usia.startsWith(inputUserUsia) && data[i].pekerjaan.startsWith(inputUserPekerjaan)){
+                    newData.push(data[i])
+                }
+
+            }
+            
+            tampil(newData)
+            
+        }
+    </script>
